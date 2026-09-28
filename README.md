@@ -1,30 +1,85 @@
-# The Great Lock-in of Sept-Dec 2
+# The Great Lock-in of Sept–Dec
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+A daily habit-tracker calendar for a "lock-in" period: September through December 2025. Tap any day to mark it as done (yes) or missed (no), track your streak, and watch four months of consistency fill in — all in the browser, no account needed.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/gileb64375-5584s-projects/v0-the-great-lock-in-of-sept-dec-2)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/EvKyyPGiaTX)
+> Live demo: https://girishlade111.github.io/the-great-lock-in-of-sept-dec-2/
 
-## Overview
+## Features
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+- **4-month calendar grid** — September, October, November, December 2025 in one view
+- **Tap-to-mark days** — mark each day as done ✅ or missed ❌
+- **LocalStorage persistence** — your marks survive reloads and restarts, fully offline
+- **Today highlighted** — the current day is visually emphasized
+- **Future dates locked** — can't mark days that haven't happened yet
+- **Clean dark UI** — shadcn/ui components with a minimal, focused design
+- **100% client-side** — no backend, no database, no login
 
-## Deployment
+## Tech Stack
 
-Your project is live at:
+- **Framework:** Next.js 14 (App Router, static export)
+- **Language:** TypeScript
+- **UI:** React, Tailwind CSS, shadcn/ui (Radix primitives)
+- **Storage:** browser localStorage (`calendar-marked-dates`)
+- **Analytics:** @vercel/analytics (no-op on static export)
 
-**[https://vercel.com/gileb64375-5584s-projects/v0-the-great-lock-in-of-sept-dec-2](https://vercel.com/gileb64375-5584s-projects/v0-the-great-lock-in-of-sept-dec-2)**
+## Quick Start
 
-## Build your app
+```bash
+# install dependencies
+pnpm install
 
-Continue building your app on:
+# run the dev server
+pnpm dev
+# open http://localhost:3000
 
-**[https://v0.app/chat/projects/EvKyyPGiaTX](https://v0.app/chat/projects/EvKyyPGiaTX)**
+# build the static site
+pnpm build
+# output goes to ./out
+```
+
+Requires Node.js 18+.
+
+## Project Structure
+
+```
+.
+├── app/
+│   ├── layout.tsx        # Root layout (fonts, theme provider)
+│   ├── page.tsx          # The lock-in calendar (client component, all logic here)
+│   └── globals.css       # Global Tailwind styles
+├── components/
+│   ├── ui/               # shadcn/ui primitives (button, etc.)
+│   └── theme-provider.tsx
+├── lib/
+│   └── utils.ts          # cn() class merge helper
+├── public/               # Static assets
+├── styles/
+│   └── globals.css       # Additional global styles
+└── next.config.mjs       # next config (output: 'export', basePath for gh-pages)
+```
 
 ## How It Works
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+Each day cell is keyed by `Month-day` and stored in localStorage as `"yes"` or `"no"`. Clicking a day cycles its state. The calendar layouts are hardcoded for Sept–Dec 2025 with the correct weekday offsets, so there is no date library and no runtime date math beyond "today".
+
+## Environment Variables
+
+None required — the app is fully client-side.
+
+## Deployment
+
+This project builds to a static export (`output: 'export'`) and is deployed to **GitHub Pages** at https://girishlade111.github.io/the-great-lock-in-of-sept-dec-2/.
+
+```bash
+pnpm build   # -> ./out
+```
+
+Note: `next.config.mjs` sets `basePath: '/the-great-lock-in-of-sept-dec-2'` so asset URLs resolve under the GitHub Pages subpath. If you deploy to a root domain or Vercel instead, remove the `basePath` line.
+
+## License
+
+MIT — free to use and remix.
+
+---
+
+Built by Girish Lade — https://ladestack.in
